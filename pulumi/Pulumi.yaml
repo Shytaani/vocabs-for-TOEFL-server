@@ -1,0 +1,6 @@
+name: vocabs-for-TOEFL-server
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Backend server for vocabs for TOEFL iOS/Android app
