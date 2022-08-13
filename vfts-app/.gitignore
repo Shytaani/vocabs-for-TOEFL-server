@@ -1,9 +1,10 @@
 HELP.md
+.gradle
 .command
-**/venv/
-*.command
-.DS_Store
-__pycache__
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 ### STS ###
 .apt_generated
