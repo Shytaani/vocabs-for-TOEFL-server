@@ -5,3 +5,4 @@ config:
   azure-native:location: japaneast
   azure-native:subscriptionId: 1200f216-8dbb-469b-b231-d3eddad7631e
   azure-native:tenantId: 84c7a914-b1ff-42ea-ab86-4168a97e96e0
+  docker:host: tcp://127.0.0.1:2376/
