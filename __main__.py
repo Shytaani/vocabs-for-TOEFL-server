@@ -28,7 +28,7 @@ primary_key = pulumi.Output.all(resource_group.name, account.name) \
 
 pulumi.export("primary_storage_key", primary_key)
 
-# Push Docker image to Azure Container Registry
+# Create an Azure Container Registry
 registry = containerregistry.Registry('vftsRegistry',
     admin_user_enabled=True,
     registry_name='vftsRegistry',
@@ -60,7 +60,7 @@ container_group = containerinstance.ContainerGroup("VFTS-CG",
     containers=[containerinstance.ContainerArgs(
         command=[],
         environment_variables=[],
-        image="nginx",
+        image=f"{custom_image}",
         name="vfts",
         ports=[containerinstance.ContainerPortArgs(
             port=80,
