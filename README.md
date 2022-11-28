@@ -15,7 +15,12 @@
 
     See: https://www.pulumi.com/registry/packages/azure-native/installation-configuration/#credentials
 
-3. Preview and deploy changes
+3. Configure Credentials for Pulumi Docker provider
+    ```bash
+    pulumi config set docker:host tcp://127.0.0.1:2376/
+    ```
+
+4. Preview and deploy changes
     ```bash
     pulumi up
     ```
