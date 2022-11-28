@@ -18,13 +18,8 @@ repositories {
 	mavenCentral()
 }
 
-ext {
-	set('springCloudAzureVersion', "4.3.0")
-}
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.azure.spring:spring-cloud-azure-starter'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -34,10 +29,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-dependencyManagement {
-	imports {
-		mavenBom "com.azure.spring:spring-cloud-azure-dependencies:${springCloudAzureVersion}"
-	}
+jar {
+//	モジュール名-plain.jarの生成を抑制
+	enabled = false
 }
 
 tasks.named('test') {
