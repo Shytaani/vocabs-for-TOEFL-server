@@ -1,7 +1,0 @@
-config:
-  azure-native:clientId: 27ddce84-8987-409c-8877-967949cca514
-  azure-native:clientSecret:
-    secure: AAABAA2d0V4VIW4rdDTfzdZqHLFgt8VT5WC56Vl+WsPSjUBjOrYV7zrLU8wvXP+5ZJ9nbGgckpGpr/0GP66i7YrUaVhg2ark
-  azure-native:location: japaneast
-  azure-native:subscriptionId: 1200f216-8dbb-469b-b231-d3eddad7631e
-  azure-native:tenantId: 84c7a914-b1ff-42ea-ab86-4168a97e96e0
