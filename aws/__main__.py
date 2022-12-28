@@ -33,8 +33,7 @@ security_group = aws.ec2.SecurityGroup("vftsSG",
         from_port=80,
         to_port=80,
         protocol="tcp",
-        cidr_blocks=["0.0.0.0/0"],
-        ipv6_cidr_blocks=["::/0"],
+        cidr_blocks=["10.0.0.0/16"],
     )],
     egress=[aws.ec2.SecurityGroupEgressArgs(
         from_port=0,
@@ -46,7 +45,8 @@ security_group = aws.ec2.SecurityGroup("vftsSG",
 
 # An ECR repository to store our application's container image
 repo = awsx.ecr.Repository("vftsRepo",
-    name="vftsrepo")
+    name="vftsrepo",
+    force_delete=True)
 
 # Build and publish our application's container image from ./app to the ECR repository
 image = awsx.ecr.Image(
