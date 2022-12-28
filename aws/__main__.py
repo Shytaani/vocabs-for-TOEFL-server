@@ -7,7 +7,7 @@ container_port = config.get_int("containerPort", 80)
 cpu = config.get_int("cpu", 512)
 memory = config.get_int("memory", 128)
 
-# A custom VPC
+# A custom VPC contains resources
 vpc = awsx.ec2.Vpc("vftsVPC")
 pulumi.export("vpcId", vpc.vpc_id)
 pulumi.export("publicSubnetIds", vpc.public_subnet_ids)
@@ -25,17 +25,19 @@ loadbalancer = awsx.lb.ApplicationLoadBalancer("vftsLB",
 pulumi.export("lb_vpcId", loadbalancer.vpc_id)
 pulumi.export("load_balancer", loadbalancer.load_balancer)
 
-# A Security Group
+# A Security Group to be attached to an ECS Service
 security_group = aws.ec2.SecurityGroup("vftsSG",
     name="vftsSG",
     vpc_id=vpc.vpc_id,
     ingress=[aws.ec2.SecurityGroupIngressArgs(
+        description="Allow inbound traffic from LB",
         from_port=80,
         to_port=80,
         protocol="tcp",
         cidr_blocks=["10.0.0.0/16"],
     )],
     egress=[aws.ec2.SecurityGroupEgressArgs(
+        description="Allow all outbound traffic",
         from_port=0,
         to_port=0,
         protocol="-1",
