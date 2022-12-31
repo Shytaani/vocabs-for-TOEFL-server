@@ -18,36 +18,67 @@
 
 stages:          # List of stages for jobs, and their order of execution
   - build
-  - test
-  - deploy
+  - infrastructure-update
 
-build-job:       # This job runs in the build stage, which runs first.
+build:       # This job runs in the build stage, which runs first.
   stage: build
   image: eclipse-temurin:17
   before_script:
-    - cd ./vfts/app
-    - chmod +x gradlew
+    - chmod +x ./vfts/app/gradlew
     - export GRADLE_USER_HOME="$(pwd)/.gradle"
   script:
     - ./gradlew clean build
 
-unit-test-job:   # This job runs in the test stage.
-  stage: test    # It only starts when the job in the build stage completes successfully.
+pulumi-aws:
+  stage: infrastructure-update
+  tags:
+    - aws
+  before_script:
+    - chmod +x ./scripts/*.sh
+    - ./scripts/setup.sh
   script:
-    - echo "Running unit tests... This will take about 60 seconds."
-    - sleep 60
-    - echo "Code coverage is 90%"
+    - ./scripts/run-pulumi-aws.sh
+  # Create an artifact archive with just the pulumi log file,
+  # which is created using console-redirection in run-pulumi.sh.
+  artifacts:
+    paths:
+    - pulumi-log.txt
+    # This is just a sample of how artifacts can be expired (removed) automatically in GitLab.
+    # You may choose to not set this at all based on your organization's or team's preference.
+    expire_in: 1 week
+  # This job should only be created if the pipeline is created for the master branch.
+  only:
+  - main
+  - gitlab-ci/cd
 
-lint-test-job:   # This job also runs in the test stage.
-  stage: test    # It can run at the same time as unit-test-job (in parallel).
+pulumi-azure:
+  stage: infrastructure-update
+  tags:
+    - azure
+  before_script:
+    - chmod +x ./scripts/*.sh
+    - ./scripts/setup.sh
   script:
-    - echo "Linting code... This will take about 10 seconds."
-    - sleep 10
-    - echo "No lint issues found."
+    - ./scripts/run-pulumi-azure.sh
+  # Create an artifact archive with just the pulumi log file,
+  # which is created using console-redirection in run-pulumi.sh.
+  artifacts:
+    paths:
+    - pulumi-log.txt
+    # This is just a sample of how artifacts can be expired (removed) automatically in GitLab.
+    # You may choose to not set this at all based on your organization's or team's preference.
+    expire_in: 1 week
+  # This job should only be created if the pipeline is created for the master branch.
+  only:
+  - main
+  - gitlab-ci/cd
 
-deploy-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  environment: production
+pulumi-preview:
+  stage: infrastructure-update
+  before_script:
+    - chmod +x ./scripts/*.sh
+    - ./scripts/setup.sh
   script:
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
+    - ./scripts/pulumi-preview.sh
+  only:
+  - merge_requests
