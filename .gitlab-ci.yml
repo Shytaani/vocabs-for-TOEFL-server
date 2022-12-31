@@ -24,7 +24,8 @@ build:       # This job runs in the build stage, which runs first.
   stage: build
   image: eclipse-temurin:17
   before_script:
-    - chmod +x ./vfts/app/gradlew
+    - cd ./vfts/app
+    - chmod +x gradlew
     - export GRADLE_USER_HOME="$(pwd)/.gradle"
   script:
     - ./gradlew clean build
