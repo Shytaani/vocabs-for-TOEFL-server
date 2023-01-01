@@ -32,6 +32,7 @@ build:       # This job runs in the build stage, which runs first.
 
 pulumi:
   stage: infrastructure-update
+  image: python:3.9
   before_script:
     - chmod +x ./scripts/*.sh
     - ./scripts/setup.sh
@@ -52,6 +53,7 @@ pulumi:
 
 pulumi-preview:
   stage: infrastructure-update
+  image: python:3.9
   before_script:
     - chmod +x ./scripts/*.sh
     - ./scripts/setup.sh
