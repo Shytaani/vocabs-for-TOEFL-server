@@ -6,6 +6,8 @@ set -e -x
 # Add the pulumi CLI to the PATH
 export PATH=$PATH:$HOME/.pulumi/bin
 
+cd ./aws
+
 pulumi stack select -s Tanishy/vocabs-for-TOEFL-server_aws/dev
 # The following is just a sample config setting that the hypothetical pulumi
 # program needs.
