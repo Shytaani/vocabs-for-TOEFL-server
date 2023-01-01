@@ -6,7 +6,7 @@ set -e -x
 # Add the pulumi CLI to the PATH
 export PATH=$PATH:$HOME/.pulumi/bin
 
-pulumi stack select dev
+pulumi stack select vocabs-for-TOEFL-server/dev
 # The following is just a sample config setting that the hypothetical pulumi
 # program needs.
 # Learn more about pulumi configuration at: https://www.pulumi.com/docs/intro/concepts/config/
