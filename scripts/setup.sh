@@ -11,3 +11,5 @@ pulumi login
 # update the GitLab Runner's packages
 apt-get update -y
 apt-get install sudo -y
+# Install Docker Engine
+apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
