@@ -13,5 +13,6 @@ pulumi stack select -s Tanishy/vocabs-for-TOEFL-server_aws/dev
 # program needs.
 # Learn more about pulumi configuration at: https://www.pulumi.com/docs/intro/concepts/config/
 pulumi config set aws:region ap-northeast-1
+pulumi config set vocabs-for-TOEFL-server_aws:siteDomainName "vocabs-for-toefl.com"
 # pulumi config set azure-native:location japaneast
 pulumi up --yes
