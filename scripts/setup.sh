@@ -25,5 +25,6 @@ echo \
 sudo apt-get update -y
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
 sudo service docker start
-timeout 5 sudo cat /var/log/docker.log
+sleep 10
+sudo cat /var/log/docker.log
 sudo docker run hello-world
