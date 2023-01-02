@@ -31,7 +31,7 @@ build:       # This job runs in the build stage, which runs first.
     - ./gradlew clean build
   artifacts:
     paths:
-      - ./build/libs/*.jar
+      - vfts/app/build/libs/*.jar
     expire_in: 1 week
 
 pulumi:
