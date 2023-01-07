@@ -52,7 +52,7 @@ pulumi:
     expire_in: 1 week
   # This job should only be created if the pipeline is created for the master branch.
   only:
-    - main
+  - main
 
 pulumi-preview:
   stage: infrastructure-update
@@ -63,4 +63,4 @@ pulumi-preview:
   script:
     - ./scripts/pulumi-preview.sh
   only:
-    - merge_requests
+  - merge_requests
