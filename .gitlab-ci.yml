@@ -58,10 +58,10 @@ pulumi-preview:
   stage: infrastructure-update
   image: python:3.9
   before_script:
+    - echo $PULUMI_ACCESS_TOKEN
     - chmod +x ./scripts/*.sh
     - ./scripts/setup.sh
   script:
-    - echo $PULUMI_ACCESS_TOKEN
     - ./scripts/pulumi-preview.sh
   only:
     - merge_requests
