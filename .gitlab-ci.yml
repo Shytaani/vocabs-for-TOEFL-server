@@ -53,7 +53,6 @@ pulumi:
   # This job should only be created if the pipeline is created for the master branch.
   only:
   - main
-  - gitlab-ci/cd
 
 pulumi-preview:
   stage: infrastructure-update
