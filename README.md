@@ -21,7 +21,7 @@
     ```bash
     pulumi up
     ```
-    If this error occured, follow the message and run the command in it.
+    If this error occured, follow the message and run the command in it, then rerun `pulumi up`.
     ```bash
     error: no resource plugin 'pulumi-resource-aws' found in the workspace at version v5.4.0 or on your $PATH, install the plugin using `pulumi plugin install resource aws v5.4.0`
     ```
