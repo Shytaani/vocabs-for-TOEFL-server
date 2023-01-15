@@ -10,3 +10,6 @@ spring:
    h2:
       console:
          enabled: true
+
+mybatis:
+   type-aliases-package: com.shytaani.vfts.entity
