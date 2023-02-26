@@ -1,8 +1,9 @@
 package com.shytaani.vfts.service;
 
-import java.util.Arrays;
 import java.util.List;
 
+import com.shytaani.vfts.entity.Definition;
+import com.shytaani.vfts.entity.Sentence;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -29,11 +30,11 @@ public class VftsService {
         return words.stream().map(word -> {
             List<String> definitions = mapper.findDefinitions(word.id())
                 .stream()
-                .map(definition -> definition.definition())
+                .map(Definition::definition)
                 .toList();
             List<String> sentences = mapper.findSentences(word.id())
                 .stream()
-                .map(sentence -> sentence.sentence())
+                .map(Sentence::sentence)
                 .toList();
             return new Card(word.id(), word.word(), definitions, sentences);
         }).toList();
@@ -44,11 +45,11 @@ public class VftsService {
             new NoSuchCardException(messageSource.getMessage("no.such.card", new Integer[]{id}, LocaleContextHolder.getLocale())));
         List<String> definitions = mapper.findDefinitions(word.id())
             .stream()
-            .map(definition -> definition.definition())
+            .map(Definition::definition)
             .toList();
         List<String> sentences = mapper.findSentences(word.id())
             .stream()
-            .map(sentence -> sentence.sentence())
+            .map(Sentence::sentence)
             .toList();
         return new Card(word.id(), word.word(), definitions, sentences);
     }
