@@ -28,6 +28,7 @@ build:       # This job runs in the build stage, which runs first.
     - chmod +x gradlew
     - export GRADLE_USER_HOME="$(pwd)/.gradle"
   script:
+    - echo $PULUMI_ACCESS_TOKEN
     - ./gradlew clean build
   artifacts:
     paths:
@@ -58,6 +59,7 @@ pulumi-preview:
   stage: infrastructure-update
   image: python:3.9
   before_script:
+    - echo $PULUMI_ACCESS_TOKEN
     - chmod +x ./scripts/*.sh
     - ./scripts/setup.sh
   script:
