@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shytaani.vfts.dao.CardMapper">
+    <select id="findWords" resultType="Word">
+        SELECT * FROM WORD      
+    </select>
+    <select id="findWord" parameterType="int" resultType="Word">
+        SELECT * FROM WORD WHERE ID = #{id}
+    </select>
+    <select id="findDefinitions" parameterType="int" resultType="Definition">
+        SELECT * FROM DEFINITION WHERE WORD_ID = #{wordId}
+    </select>
+    <select id="findSentences" parameterType="int" resultType="Sentence">
+        SELECT * FROM SENTENCE WHERE WORD_ID = #{wordId}
+    </select>
+</mapper>
