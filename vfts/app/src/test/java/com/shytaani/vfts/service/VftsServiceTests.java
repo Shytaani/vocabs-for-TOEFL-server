@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -14,18 +13,24 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.MessageSource;
 
 import com.shytaani.vfts.dao.CardMapper;
 import com.shytaani.vfts.dto.Card;
 import com.shytaani.vfts.entity.Definition;
 import com.shytaani.vfts.entity.Sentence;
 import com.shytaani.vfts.entity.Word;
+import com.shytaani.vfts.exception.NoSuchCardException;
+import org.springframework.context.i18n.LocaleContextHolder;
 
 @SpringBootTest
 public class VftsServiceTests {
 
     @Mock
     private CardMapper mapper;
+
+    @Mock
+    private MessageSource messageSource;
 
     @InjectMocks
     private VftsService service;
@@ -77,7 +82,7 @@ public class VftsServiceTests {
     }
 
     @Test
-    void getCardReturnsACard() {
+    void getCardReturnsACard() throws NoSuchCardException {
         when(mapper.findWord(1)).thenReturn(Optional.of(new Word(1, "word1")));
         when(mapper.findWord(2)).thenReturn(Optional.of(new Word(2, "word2")));
 
@@ -113,9 +118,12 @@ public class VftsServiceTests {
     }
 
     @Test
-    void getCardThorwsNoSuchElementException() {
+    void getCardThrowsNoSuchCardException() {
         when(mapper.findWord(1)).thenReturn(Optional.empty());
+        when(messageSource.getMessage("no.such.card", null, LocaleContextHolder.getLocale()))
+                .thenReturn("This card does not exists.");
 
-        assertThrowsExactly(NoSuchElementException.class, () -> service.getCard(1));
+        var ex = assertThrowsExactly(NoSuchCardException.class, () -> service.getCard(1));
+        assertEquals(messageSource.getMessage("no.such.card", null, LocaleContextHolder.getLocale()), ex.getMessage());
     }
 }

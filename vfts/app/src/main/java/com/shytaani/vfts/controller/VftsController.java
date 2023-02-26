@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shytaani.vfts.dto.Card;
+import com.shytaani.vfts.exception.NoSuchCardException;
 import com.shytaani.vfts.service.VftsService;
 
 @RestController
@@ -26,7 +27,7 @@ public class VftsController {
     }
 
     @GetMapping("/card/{id}")
-    public Card getCard(@PathVariable Integer id) {
+    public Card getCard(@PathVariable Integer id) throws NoSuchCardException {
         return service.getCard(id);
     }
 }

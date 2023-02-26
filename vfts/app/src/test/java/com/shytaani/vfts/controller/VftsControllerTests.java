@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -14,6 +13,7 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.shytaani.vfts.dto.Card;
+import com.shytaani.vfts.exception.NoSuchCardException;
 import com.shytaani.vfts.service.VftsService;
 
 @SpringBootTest
@@ -62,7 +62,7 @@ public class VftsControllerTests {
     }
 
     @Test
-    void getCardReturnsACard() {
+    void getCardReturnsACard() throws NoSuchCardException {
         when(service.getCard(1)).thenReturn(
             new Card(1, "word1", List.of("def1", "def2"), List.of("sen1", "sen2"))
         );
@@ -81,9 +81,9 @@ public class VftsControllerTests {
     }
 
     @Test
-    void getCardThorwsNoSuchElementException() {
-        when(service.getCard(1)).thenThrow(NoSuchElementException.class);
+    void getCardThorwsNoSuchCardException() throws NoSuchCardException {
+        when(service.getCard(1)).thenThrow(NoSuchCardException.class);
 
-        assertThrows(NoSuchElementException.class, () -> controller.getCard(1));
+        assertThrows(NoSuchCardException.class, () -> controller.getCard(1));
     }
 }
