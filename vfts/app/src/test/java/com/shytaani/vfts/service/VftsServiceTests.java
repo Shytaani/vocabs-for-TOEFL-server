@@ -10,8 +10,8 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
 
@@ -26,17 +26,19 @@ import org.springframework.context.i18n.LocaleContextHolder;
 @SpringBootTest
 public class VftsServiceTests {
 
+    private VftsService service;
+
     @Mock
     private CardMapper mapper;
 
-    @Mock
+    @Autowired
     private MessageSource messageSource;
-
-    @InjectMocks
-    private VftsService service;
 
     @BeforeEach
     void init() {
+
+        service = new VftsService(mapper, messageSource);
+
         when(mapper.findDefinitions(1)).thenReturn(List.of(
             new Definition(1, 1, "def11")
         ));
@@ -120,10 +122,9 @@ public class VftsServiceTests {
     @Test
     void getCardThrowsNoSuchCardException() {
         when(mapper.findWord(1)).thenReturn(Optional.empty());
-        when(messageSource.getMessage("no.such.card", null, LocaleContextHolder.getLocale()))
-                .thenReturn("This card does not exists.");
 
         var ex = assertThrowsExactly(NoSuchCardException.class, () -> service.getCard(1));
-        assertEquals(messageSource.getMessage("no.such.card", null, LocaleContextHolder.getLocale()), ex.getMessage());
+        assertEquals(messageSource.getMessage("no.such.card", new Integer[]{1}, LocaleContextHolder.getLocale()),
+                ex.getMessage());
     }
 }
